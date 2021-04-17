@@ -1,48 +1,24 @@
 import React from 'react';
-import { SearchOutlined, BellOutlined, UserOutlined } from '@ant-design/icons';
-import {
-    Wrapper,
-    IconContainer,
-    LogoContainer,
-    UserName,
-    EmptyCircle,
-} from './styles';
-import GovLogo from '../../common/images/GovLogo.png'
+import govlogo from '../../common/images/GovLogo.png';
+import { AppHeader, Wrapper, HeaderLinks, LogoContainer, Logo } from './styles';
 
-const Header = ({
-    username,
-    notficationButtonHandler,
-    profileButtonHandler,
-}) => {
-    const iconStyle = {
-        color: '#ffffff',
-        fontSize: '1.5em',
-        margin: '0 10px',
-    };
-    const iconList = [
-        <SearchOutlined style={iconStyle} />,
-        <a href={notficationButtonHandler}>
-            <BellOutlined style={iconStyle} />
-        </a>,
-        <a href={profileButtonHandler}>
-            <EmptyCircle>
-                <UserOutlined style={{ fontSize: '1em', color: '#ffffff' }} />
-            </EmptyCircle>
-        </a>,
-    ];
-
+const Header = () => {
     return (
-        <Wrapper>
-            <LogoContainer>
-                <img src={GovLogo} alt="Govt. Logo" style={{ height: '70%' }} ></img>
-            </LogoContainer>
-            <IconContainer>
-                {iconList.map(icon => {
-                    return icon;
-                })}
-                <UserName>{username}</UserName>
-            </IconContainer>
-        </Wrapper>
+        <AppHeader>
+            <Wrapper>
+                <LogoContainer>
+                    <img src={govlogo} alt="government logo" style={{ width: "60px", height: "50px", marginLeft: "10px" }} />
+                </LogoContainer>
+                <h3 style={{ color: "#ffffff" }}>
+                    22x7 Dashboard
+                </h3>
+                <HeaderLinks>
+                    <div className="nick-name">
+                        Sparsh
+                    </div>
+                </HeaderLinks>
+            </Wrapper>
+        </AppHeader>
     );
 };
 

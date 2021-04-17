@@ -25,23 +25,23 @@ class ShowChart extends Component {
     }
 
     render() {
-        let bawal = <DataEntry kuchbhi={this.stateChangeHandler} />
+        let finalView = <DataEntry submitData={this.stateChangeHandler} />
         if (this.state.typeOfChart !== null) {
             if (this.state.typeOfChart === 'Barchart') {
-                bawal = <BarChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
+                finalView = <BarChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
             }
             else if (this.state.typeOfChart === 'Linechart') {
-                bawal = <LineChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
+                finalView = <LineChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
             }
             else if (this.state.typeOfChart === 'Doughnoutchart') {
-                bawal = <DoughnoutChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
+                finalView = <DoughnoutChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
             }
             else {
-                bawal = <BarChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
+                finalView = <BarChart timeLine={this.state.timeLine} dataSet={this.state.dataSet} legend={this.state.legend} />
             }
         }
         return (
-            bawal
+            finalView
         );
     }
 }

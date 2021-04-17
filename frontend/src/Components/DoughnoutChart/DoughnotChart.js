@@ -1,8 +1,9 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { Button } from 'antd';
 
-const DoughnutChart = ({ timeLine, legend, dataSet }) => {
-
+const DoughnutChart = ({ timeLine, legend, dataSet, height, width, downloadAsImage }) => {
+    let chartReference = React.createRef();
     const backgroundColor = [
         "#0074D9",
         "#FF4136",
@@ -21,38 +22,53 @@ const DoughnutChart = ({ timeLine, legend, dataSet }) => {
         "#AAAAAA"
     ];
 
+    const chart = <Doughnut
+        data={
+            {
+                labels: timeLine,
+                datasets: [
+                    {
+                        label: legend,
+                        data: dataSet,
+                        borderWidth: 1,
+                        backgroundColor: backgroundColor,
+                    }
+                ]
+            }
+        }
+        height={height}
+        width={width}
+        ref={chartReference}
+        options={
+            {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+
+            }
+        }
+    />;
+
+    const download = () => {
+        const imageLink = chartReference.current.chartInstance.toBase64Image();
+        downloadAsImage(imageLink);
+    }
+
+    const final = (
+        <>
+            <Button onClick={download} >Download Chart</Button>
+            {chart}
+        </>
+    )
+
 
     return (
-        <Doughnut
-            data={
-                {
-                    labels: timeLine,
-                    datasets: [
-                        {
-                            label: legend,
-                            data: dataSet,
-                            borderWidth: 1,
-                            backgroundColor: backgroundColor,
-                        }
-                    ]
-                }
-            }
-            height={600}
-            width={800}
-            options={
-                {
-                    maintainAspectRatio: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-
-                }
-            }
-        />
+        final
     );
 }
 

@@ -15,7 +15,7 @@ mydb = mysql.connector.connect(
 		password="",
 		database = "dep"
 	)
-# Create your views here. 
+# Create your views here.  
 
 class SheetView(APIView): 
 

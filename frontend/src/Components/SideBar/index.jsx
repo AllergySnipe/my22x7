@@ -1,78 +1,114 @@
 import React from 'react';
-import { LoginOutlined } from '@ant-design/icons';
+import { Route, Link } from 'react-router-dom';
+import FlexBox from '../FlexBox/index';
 import {
-    Wrapper,
-    CenterContainer,
-    Container,
-    Module,
-    Resource,
-    NormalText,
-    Placeholder,
-    BottomBorder,
+    LinkContainer,
+    EmptyCircle,
+    ItemCount,
+    NavLink,
+    StyledLink,
+    SideNav,
+    Title,
+    StyledButton,
+    LinkPayment,
+    LogoutIcon,
 } from './styles';
-import HomeButton from '../Header/HomeButton/index';
-import SideBarButton from './SideBarButton/index';
 
-const SideBar = ({ modules, resources, Logout, homeHandler }) => {
-    const moduleList = modules;
-    const resourceList = resources;
+/**
+ * the items values needs to be obtained from user settings/config
+ * fetched from waxwing backend
+ */
+
+const resources = [
+    {
+        name: 'General Administration',
+        link: '/general-administration',
+    },
+    {
+        name: 'Development Administration',
+        link: '/dev-administration',
+    },
+    {
+        name: 'Seasonal Work',
+        link: '/seasonal',
+    },
+    {
+        name: 'Structured Drives and Working',
+        link: '/drives-working',
+    },
+];
+const modules = [
+    {
+        name: 'Create Data Entry',
+        link: '/app/quick-start',
+        items: 0,
+    },
+    {
+        name: 'Upload Excel file',
+        link: '/upload-sheet',
+        items: 0,
+    },
+    {
+        name: 'Delete/Update Data',
+        link: '/app/quick-start',
+        items: 0,
+    },
+];
+
+const SideBar = () => {
     return (
-        <Wrapper>
-            <CenterContainer>
-                <HomeButton buttonText="Home" buttonClickHandler={homeHandler} />
-                <BottomBorder />
-            </CenterContainer>
-            <Container>
-                {moduleList.map(module => {
-                    let placeholder = <Placeholder>{module.items}</Placeholder>;
-                    if (module.items === 0) {
-                        placeholder = null;
-                    }
-                    return (
-                        <div
-                            key={module.name}
-                            style={{
-                                margin: '10px 30px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                boxSizing: 'border-box',
-                            }}
-                            onClick={module.useFunction}
-                        >
-                            <Module href={module.link}>{module.name}</Module>
-                            {placeholder}
-                        </div>
-                    );
-                })}
-                <BottomBorder />
-            </Container>
-            <Container>
-                <NormalText>Resources</NormalText>
-                {resourceList.map(resource => {
-                    return (
-                        <Resource key={resource.name} href={resource.link}>
-                            {resource.name}
-                        </Resource>
-                    );
-                })}
-                <BottomBorder />
-            </Container>
-            <CenterContainer>
-                <SideBarButton
-                    icon={
-                        <LoginOutlined
-                            style={{
-                                fontSize: '1.5em',
-                                color: '#ffffff',
-                                marginRight: '5px',
-                            }}
-                        />
-                    }
-                    text="Logout"
-                    buttonClickHandler={Logout}
-                />
-            </CenterContainer>
-        </Wrapper>
+        <SideNav>
+            <div>
+                <LinkContainer>
+                    <StyledLink to="/">
+                        <NavLink >
+                            Home
+                        </NavLink>
+                    </StyledLink>
+                </LinkContainer>
+                <LinkContainer>
+                    {modules.map(({ link, name, items }) => {
+                        return (
+                            <StyledLink to={link} key={link}>
+                                <NavLink
+
+                                    justify="space-between"
+                                >
+                                    {name}
+                                    {items ? (
+                                        <ItemCount>{items}</ItemCount>
+                                    ) : null}
+                                </NavLink>
+                            </StyledLink>
+                        );
+                    })}
+                </LinkContainer>
+                <LinkContainer>
+                    <Title>RESOURCES</Title>
+                    {resources.map(({ name, link }) => {
+                        return (
+                            <StyledLink to={link} key={link}>
+                                <NavLink
+                                    height="30px"
+                                >
+                                    {name}
+                                </NavLink>
+                            </StyledLink>
+                        );
+                    })}
+                </LinkContainer>
+
+                <LinkPayment style={{ textAlign: 'center' }}>
+                    <FlexBox style={{ marginTop: 10 }}>
+                    </FlexBox>
+                    <StyledButton
+                        style={{ marginTop: '25px' }}
+                    >
+                        Logout
+                    </StyledButton>
+                </LinkPayment>
+            </div>
+        </SideNav>
     );
 };
 

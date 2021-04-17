@@ -22,6 +22,7 @@ from sheets.views import *
   
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
-    path('', ReactView.as_view(), name="something"), 
+    #path('', ReactView.as_view(), name="something"), 
     path('excel/', SheetView.as_view(), name="sheets"), 
+    path('api/auth/', include('core.urls'))
 ]
