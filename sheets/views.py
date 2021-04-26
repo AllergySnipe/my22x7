@@ -58,3 +58,8 @@ def importCsvToDB(tablename,path):
     mycursor = mydb.cursor()
     mycursor.execute(query)
     mydb.commit()
+
+class CustomQueryView(APIView):
+    serializer_class = CustomQuerySerializer
+
+    
