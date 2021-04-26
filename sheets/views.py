@@ -6,16 +6,16 @@ from . serializer import *
 import csv
 import json
 from django.core import serializers
-#import mysql.connector
+import mysql.connector
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = str(BASE_DIR).replace("\\", "/")
-# mydb = mysql.connector.connect(
-#		host="localhost",
-#		user="root",
-#		password="",
-#		database = "dep"
-#	)
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="dep"
+)
 # Create your views here.
 
 
