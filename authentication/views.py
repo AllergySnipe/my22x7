@@ -27,7 +27,6 @@ class LoginView(GenericAPIView):
         username = data['username']
         password = data['password']
         user = User.objects.filter(username=username).first()
-        print(user)
         if user is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -41,7 +40,6 @@ class LoginView(GenericAPIView):
         }
 
         token = jwt.encode(payload, settings.JWT_SECRET, algorithm='HS256')
-        print(token)
         response = Response(data=token, status=status.HTTP_200_OK)
         return response
 
@@ -63,10 +61,3 @@ class Userview(GenericAPIView):
 
         serializer = Userserializer(user, many=True)
         return(Response(serializer.data, status=status.HTTP_200_OK))
-
-
-class Logoutview(GenericAPIView):
-    def post(self, request):
-        response = Response(status=status.HTTP_200_OK)
-        response.delete_cookie('jwt')
-        return response
