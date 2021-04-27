@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2021 at 10:06 AM
+-- Generation Time: Apr 27, 2021 at 03:07 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -73,9 +73,11 @@ CREATE TABLE `criminal_court` (
 --
 
 CREATE TABLE `distribution of atta` (
-  `year` date NOT NULL,
+  `year` int(11) NOT NULL,
   `distributed atta` int(11) NOT NULL,
-  `target` int(11) NOT NULL
+  `target` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `district` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -85,9 +87,11 @@ CREATE TABLE `distribution of atta` (
 --
 
 CREATE TABLE `distribution of dal` (
-  `year` date NOT NULL,
+  `year` int(11) NOT NULL,
   `dal distributed` int(11) NOT NULL,
-  `target` int(11) NOT NULL
+  `target` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `district` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -97,10 +101,12 @@ CREATE TABLE `distribution of dal` (
 --
 
 CREATE TABLE `enforcement of drug measures` (
-  `month` date NOT NULL,
+  `month` int(11) NOT NULL,
   `substance` varchar(32) NOT NULL,
   `schedule` int(11) NOT NULL,
-  `decision` varchar(32) NOT NULL
+  `decision` varchar(32) NOT NULL,
+  `district` varchar(32) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -122,6 +128,9 @@ CREATE TABLE `excise_duty_tax` (
 
 INSERT INTO `excise_duty_tax` (`district`, `collection`, `month`, `year`) VALUES
 ('chd', 19, 4, 2021),
+('chd', 52, 5, 2021),
+('chd', 25, 6, 2021),
+('chd', 41, 7, 2021),
 ('ludh', 12, 5, 2020),
 ('pat', 24, 7, 2021);
 
@@ -140,6 +149,14 @@ CREATE TABLE `gst` (
   `month` int(11) NOT NULL,
   `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `gst`
+--
+
+INSERT INTO `gst` (`district`, `gst_collected`, `gst_target`, `vat_collected`, `vat_target`, `month`, `year`) VALUES
+('chd', 100, 115, 125, 130, 4, 2021),
+('chd', 80, 85, 105, 113, 5, 2021);
 
 -- --------------------------------------------------------
 
@@ -168,7 +185,9 @@ CREATE TABLE `rehabilition` (
   `district` varchar(32) NOT NULL,
   `rehabilitation centers` int(11) NOT NULL,
   `total patients` int(11) NOT NULL,
-  `succesful rehabs` int(11) NOT NULL
+  `succesful rehabs` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -194,7 +213,9 @@ CREATE TABLE `stamp_duty` (
 CREATE TABLE `upgradation of infrastructure` (
   `district` varchar(32) NOT NULL,
   `total hospital beds` int(11) NOT NULL,
-  `target for next month` int(11) NOT NULL
+  `target for next month` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -208,7 +229,8 @@ CREATE TABLE `vaccination_data` (
   `doses for above 45` int(11) NOT NULL,
   `doses for between 18 and 45` int(11) NOT NULL,
   `doses for below 18` int(11) NOT NULL,
-  `month` date NOT NULL
+  `month` int(11) NOT NULL,
+  `year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

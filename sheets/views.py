@@ -60,6 +60,20 @@ def importCsvToDB(tablename,path):
     mydb.commit()
 
 class CustomQueryView(APIView):
-    serializer_class = CustomQuerySerializer
+
+    def get(self, request):
+        start_month=request.GET.get('start_month')
+        end_month=request.GET.get('end_month')
+        start_year=request.GET.get('start_year')
+        end_year=request.GET.get('end_year')
+        tablename=request.GET.get('tablename')
+        district=request.GET.get('district')
+        mycursor = mydb.cursor()
+
+        sql = "SELECT * FROM " + tablename +" WHERE ((year >"+ start_year +" and year <"+ end_year +") or (year = " + start_year +" and month >= " + start_month + " and year = " + end_year +" and month <= "+ end_month +") or (year > " + start_year +" and year = "+ end_year +" and month <= "+ end_month +") or (year = "+ start_year +" and month >= "+ start_month +" and year < "+ end_year +")) and district = '" + district + "'"
+        mycursor.execute(sql)
+        myresult = [dict((mycursor.description[i][0], value) \
+               for i, value in enumerate(row)) for row in mycursor.fetchall()]
+        return Response(myresult)
 
     
