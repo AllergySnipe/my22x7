@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from authentication.urls import *
 from sheets.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('excel/', SheetView.as_view(), name="sheets"),
+    path('customquery/', CustomQueryView.as_view(), name="Custom Query"),
     path('api/auth/', include('authentication.urls'))
 ]
