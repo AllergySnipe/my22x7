@@ -98,3 +98,21 @@ class CustomQueryView(APIView):
         myresult = [dict((mycursor.description[i][0], value)
                          for i, value in enumerate(row)) for row in mycursor.fetchall()]
         return Response(myresult)
+
+class PositivityQueryView(APIView):
+
+    def get(self, request):
+        tablename = request.GET.get('tablename')
+        SubDivision = request.GET.get('SubDivision')
+        sub1 = SubDivision + " sample"
+        sub2 = SubDivision + " positive"
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        mycursor = mydb.cursor()
+        covidsql = "SELECT date, `" + sub1 + "`, `" + sub2 + "` FROM " + tablename + " WHERE Date >='" + start_date + "' and Date <='" + end_date + "'"
+        mycursor.execute(covidsql)
+        myresult = [dict((mycursor.description[i][0], value)
+                         for i, value in enumerate(row)) for row in mycursor.fetchall()]
+        for i in range(len(myresult)):
+            myresult[i]['postivity'] = "{:.2f}".format(myresult[i][sub2] * 100 / myresult[i][sub1])
+        return Response(myresult)
