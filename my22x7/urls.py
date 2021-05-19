@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('excel/', SheetView.as_view(), name="sheets"),
     path('customquery/', CustomQueryView.as_view(), name="Custom Query"),
-    path('api/auth/', include('authentication.urls'))
+    path('api/auth/', include('authentication.urls')),
+    path('positivity/', PositivityView.as_view(), name="covid"), 
 ]
