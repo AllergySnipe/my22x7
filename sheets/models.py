@@ -5,4 +5,3 @@ from django.db import models
 class Sheet(models.Model):
     title = models.CharField(max_length=30) 
     sheet = models.FileField(upload_to='uploaded_sheets/')
-    

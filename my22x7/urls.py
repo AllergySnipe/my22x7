@@ -25,5 +25,6 @@ urlpatterns = [
     #path('', ReactView.as_view(), name="something"), 
     path('excel/', SheetView.as_view(), name="sheets"), 
     path('customquery/', CustomQueryView.as_view(), name="Custom Query"),
+    path('positivity/', PositivityView.as_view(), name="covid"), 
     #path('api/auth/', include('core.urls'))
 ]

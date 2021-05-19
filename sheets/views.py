@@ -24,7 +24,7 @@ class SheetView(APIView):
     def get(self, request):
         #e=Sheet.objects.get(title='t3')
         #(make_json(e.sheet))[1]
-        mydetail = [ {"title": detail.title,"sheet": make_json(detail.title,detail.sheet,0)}
+        mydetail = [ {"title": detail.title,"sheet": make_json(detail.title,detail.sheet,0,1)}
         for detail in Sheet.objects.all()] 
         return Response(mydetail) 
 
@@ -33,9 +33,27 @@ class SheetView(APIView):
         serializer = SheetSerializer(data=request.data) 
         if serializer.is_valid(raise_exception=True): 
             serializer.save()
-            return Response(make_json(serializer.data["title"],(serializer.data["sheet"])[1:],1))
+            return Response(make_json(serializer.data["title"],(serializer.data["sheet"])[1:],1,1))
 
-def make_json(title,csvFilePath, flag):
+class PositivityView(APIView): 
+
+    serializer_class = SheetSerializer 
+
+    def get(self, request):
+        #e=Sheet.objects.get(title='t3')
+        #(make_json(e.sheet))[1]
+        mydetail = [ {"title": detail.title,"sheet": make_json(detail.title,detail.sheet,0,2)}
+        for detail in Sheet.objects.all()] 
+        return Response(mydetail) 
+
+    def post(self, request): 
+
+        serializer = SheetSerializer(data=request.data) 
+        if serializer.is_valid(raise_exception=True): 
+            serializer.save()
+            return Response(make_json(serializer.data["title"],(serializer.data["sheet"])[1:],1,2))
+
+def make_json(title,csvFilePath, flag,ignorerows):
 
     data={}
     print(title)
@@ -49,11 +67,11 @@ def make_json(title,csvFilePath, flag):
             data[key] = rows
         if(flag==1):
                 print(csvFilePath)
-                importCsvToDB(title,csvFilePath)
+                importCsvToDB(title,csvFilePath,ignorerows)
         return data
 
-def importCsvToDB(tablename,path):
-    query="LOAD DATA INFILE '"+BASE_DIR+"/"+path+"' INTO TABLE "+tablename+" FIELDS TERMINATED BY ',' ENCLOSED BY '\"' IGNORE 1 ROWS;"
+def importCsvToDB(tablename,path,ignorerows):
+    query="LOAD DATA INFILE '"+BASE_DIR+"/"+path+"' INTO TABLE "+tablename+" FIELDS TERMINATED BY ',' ENCLOSED BY '\"' IGNORE "+ str(ignorerows) +" ROWS;"
     print(query)
     mycursor = mydb.cursor()
     mycursor.execute(query)
